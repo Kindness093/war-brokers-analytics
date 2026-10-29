@@ -93,7 +93,15 @@ function schedule() {timer=setTimeout(()=>{refresh();schedule();},nextMidnight()
 schedule();
 if(process.env.WB_COLLECT_ONLY==='1') {
  clearTimeout(timer);
- if(progress || !baseline || baseline.completedAt.slice(0,10)!==new Date().toISOString().slice(0,10)) await refresh();
+ const stopAt=Date.now()+Number(process.env.WB_COLLECTION_BUDGET_MS||17400000);
+ if(progress || !baseline || baseline.completedAt.slice(0,10)!==new Date().toISOString().slice(0,10)) {
+   while(Date.now()<stopAt) {
+     process.env.WB_COLLECTION_BUDGET_MS=String(stopAt-Date.now());
+     await refresh();
+     if(!progress || Date.now()>=stopAt) break;
+     await pause(Math.min(60000,stopAt-Date.now()));
+   }
+ }
 }
 else if(process.env.WB_DISABLE_SCHEDULER==='1') clearTimeout(timer);
 else if(progress || !baseline || baseline.completedAt.slice(0,10)!==new Date().toISOString().slice(0,10)) refresh();

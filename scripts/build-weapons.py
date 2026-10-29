@@ -20,10 +20,12 @@ for w in weapons:
   return 'Unknown' if v is None else f'<span title="{v:.10f}{suffix}">{format(v,".2f").rstrip("0").rstrip(".")}{suffix}</span>'
  stats=[('Base Dmg'+(' (full volley)' if w['kind']=='shotgun' else ''),num(w['baseDamage'])),('Headshot Dmg',num(w['headDamage'])),('Fire rate',num(w['rps'],' rounds/s')),('RPM',num(w['rps']*60 if w['rps'] else None)),('Magazine',num(w['magazine'])),('Reload time',num(w['reload'],'s')),('Swap time',num(w['swap'],'s')),('Run speed',num(w['runSpeed'],'%')),('Theoretical end Dmg' if w.get('projectileLimit') else 'End Dmg',num(r.get('endDamage'))),('Drop-off cliff',num(r.get('cliff'),' m')),('Drop-off plateau',num(r.get('plateau'),' m'))]
  if w['slug']=='ar-rifle':stats += [('Crouch recoil (wiki)',num(80,'%')),('Default zoom',num(2,'×')),('Ammunition','Rifle Ammo'),('Headshot multiplier',num(2,'×'))]
- if w.get('blast'):stats += [('Graph blast Dmg',num(w['blast']['baseDamage'])),('Blast radius',num(w['blast']['radius'],' m'))]
+ if w.get('blast'):
+  stats=[(k,v) for k,v in stats if k not in ['End Dmg','Drop-off cliff','Drop-off plateau']]
+  stats += [('Graph blast Dmg',num(w['blast']['baseDamage'])),('Minimum blast Dmg',num(0)),('Blast drop begins',num(0,' m')),('Blast radius',num(w['blast']['radius'],' m'))]
  if w.get('projectileLimit'):stats += [('Projectile limit',num(w['projectileLimit'],' m'))]
  if w.get('pellets'):stats += [('Pellets per shot',num(w['pellets']))]
- stats += [('Damage differential',num(w['baseDamage']-r['endDamage'] if r.get('endDamage') is not None else None))]
+ stats += [('Damage differential',num(w['blast']['baseDamage'] if w.get('blast') else w['baseDamage']-r['endDamage'] if r.get('endDamage') is not None else None))]
  stats += [('Average drop-off rate','<span id="dropRate">—</span>')]
  stats += [('Fire modes',html.escape(' / '.join(w['fireModes']) or 'Unverified'))]
  values={'INTERVAL':200 if end>1000 else 100 if end>500 else 50 if end>300 else 25,'CONFIG':json.dumps(w).replace('</','<\\/'),'NAME':html.escape(w['name']),'CATEGORY':w['category'].upper(),'STATS':''.join(f'<p><strong>{k}:</strong> {v}</p>' for k,v in stats),'SOURCE':source,'MODEL_NOTE':html.escape(notes),'SCENARIOS':scenario,'ID':w['id'],'ACCURACY':w['defaultAccuracy'],'HEADSHOT':w['defaultHeadshot'],'ACCURACY_LABEL':f'{w["defaultAccuracy"]:.2f}','HEADSHOT_LABEL':f'{w["defaultHeadshot"]:.2f}','MAGAZINE':w['magazine'],'RPS':w['rps'],'RELOAD':w['reload'],'END':end,'CLIFF':cliff}

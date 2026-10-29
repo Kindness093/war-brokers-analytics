@@ -138,9 +138,10 @@ function getDistances() {
 }
 
 function render() {
-  $("dropRate").textContent = !Number.isFinite(WEAPON.range?.endDamage) ? "Unknown" :
-    fmt((BASE_DAMAGE - END_DAMAGE) / (DROP_PLATEAU - DROP_CLIFF), 2) +
-    " damage/m";
+  const dropRate=WEAPON.blast ? WEAPON.blast.baseDamage/WEAPON.blast.radius :
+    Number.isFinite(WEAPON.range?.endDamage)?(BASE_DAMAGE-END_DAMAGE)/(DROP_PLATEAU-DROP_CLIFF):NaN;
+  $("dropRate").textContent=Number.isFinite(dropRate)?fmt(dropRate)+" damage/m":"Unknown";
+  $("dropRate").title=precise(dropRate)+" damage/m";
 
   $("interval").disabled = $("evenSpacing").checked;
   $("intervalSlider").disabled = $("evenSpacing").checked;
