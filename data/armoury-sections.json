@@ -1,0 +1,29 @@
+{
+  "Sidearms": [
+    "Pistol",
+    "Auto Pistol",
+    "Desert",
+    "Revolver",
+    "Healing Pistol"
+  ],
+  "Melees": [
+    "Fists",
+    "Knife",
+    "KBAR",
+    "Butterfly",
+    "Chainsaw",
+    "Mace",
+    "Rubber Chicken"
+  ],
+  "Grenades": [
+    "Grenade",
+    "Concussion Grenade",
+    "Implosion Grenade",
+    "Smoke Grenade",
+    "Laser Trip Mine"
+  ],
+  "Abilities": [
+    "BGM",
+    "Air Strike"
+  ]
+}

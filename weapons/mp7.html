@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MP7 Analytics | War Brokers Analytics</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    color: black;
+    background: white;
+    line-height: 1.45;
+    margin: 24px;
+    max-width: 1100px;
+  }
+  a { color: blue; }
+  fieldset { margin: 18px 0; padding: 14px; }
+  legend { font-weight: bold; }
+  .control { margin: 14px 0; }
+  .control label { display: block; margin-bottom: 5px; }
+  .control-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  input[type="number"] { width: 80px; }
+  input[type="range"] { width: min(400px, 100%); }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+  .stats p { margin: 5px 0; }
+  .hint { color: #444; font-size: .93rem; }
+  .uid-row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+  .uid-row input { width: min(440px, 90%); }
+  button { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 24px; }
+  th, td { border: 1px solid #888; padding: 7px; text-align: left; }
+  #chart { width: 100%; height: auto; }
+  [hidden] { display: none !important; }
+</style>
+<link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=3">
+<script type="module" src="../cursor.mjs"></script>
+<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../ar-page.css">
+</head>
+
+<body>
+<header class="masthead">
+<a href="../index.html" aria-label="War Brokers Analytics home"><img src="../assets/war-brokers-analytics-logo.png" alt="War Brokers Analytics" width="100" height="100"></a>
+<div><p class="site-name">WAR BROKERS <span>ANALYTICS</span></p><nav aria-label="Main navigation"><a href="../index.html">Home</a><a href="index.html">Weapons</a><a href="../players/index.html">Players</a><a href="../leaderboards/index.html">Leaderboards</a><a href="../information/index.html">Information</a></nav></div>
+</header>
+<main>
+<div class="page-title"><p class="eyebrow">ARMOURY / SMGS</p><h1>MP7</h1><p>Damage, range and the odds behind each shot.</p></div>
+<section class="reference-strip">
+<h2>Weapon stats</h2>
+<div class="stats"><p><strong>Base Dmg:</strong> <span title="60.0000000000">60</span></p><p><strong>Headshot Dmg:</strong> <span title="120.0000000000">120</span></p><p><strong>Fire rate:</strong> <span title="12.0000000000 rounds/s">12 rounds/s</span></p><p><strong>RPM:</strong> <span title="720.0000000000">720</span></p><p><strong>Magazine:</strong> <span title="30.0000000000">30</span></p><p><strong>Reload time:</strong> <span title="1.2000000000s">1.2s</span></p><p><strong>Swap time:</strong> <span title="0.5000000000s">0.5s</span></p><p><strong>Run speed:</strong> <span title="105.0000000000%">105%</span></p><p><strong>End Dmg:</strong> <span title="12.0000000000">12</span></p><p><strong>Drop-off cliff:</strong> <span title="41.1600000000 m">41.16 m</span></p><p><strong>Drop-off plateau:</strong> <span title="170.0000000000 m">170 m</span></p><p><strong>Damage differential:</strong> <span title="48.0000000000">48</span></p><p><strong>Average drop-off rate:</strong> <span id="dropRate">—</span></p><p><strong>Fire modes:</strong> Full-Auto</p></div>
+<p class="hint"><a href="https://war-brokers.fandom.com/wiki/MP7">MP7 wiki reference</a> · infobox v539 · reference infobox values; <a href="https://static.wikia.nocookie.net/war-brokers/images/2/20/MP7_damageDrop.png/revision/latest?cb=20251219041642">range graph</a> visually checked October 29, 2026.</p>
+<p class="hint">Range endpoints and damage transcribed directly from the wiki graph labels. Straight-line falloff follows the displayed graph.</p>
+</section>
+<div class="setup-grid">
+<section class="range-setup">
+<h2>Range sampling</h2>
+<p><label for="rangeScenario">Damage model</label> <select id="rangeScenario"><option value="published">Wiki graph · labelled endpoints</option><option value="base">Base damage scenario · ignores falloff</option></select></p>
+<fieldset>
+  <div class="control">
+    <label for="interval">Interval distance (m)</label>
+    <div class="control-row">
+      <input id="interval" type="number" min="1" max="170" value="25">
+      <input id="intervalSlider" type="range" min="1" max="170" value="25">
+      <span id="intervalValue">25 m</span>
+    </div>
+  </div>
+
+  <div class="control">
+    <label for="count">Outputs visible</label>
+    <div class="control-row">
+      <input id="count" type="number" min="2" max="20" value="8">
+      <input id="countSlider" type="range" min="2" max="20" value="8">
+      <span id="countValue">8</span>
+    </div>
+  </div>
+  <p class="hint">When enabled, the plateau endpoint is included within the output limit.</p>
+</fieldset>
+
+</section>
+<details class="advanced-setup">
+  <summary><strong>Advanced settings</strong></summary>
+
+  <fieldset>
+    <legend>Range options</legend>
+    <p><label><input id="includeEndpoint" type="checkbox" checked> Include drop-off plateau (170 m)</label></p>
+    <p><label><input id="startAtCliff" type="checkbox"> Start at drop-off cliff (41.16 m)</label></p>
+    <p><label><input id="evenSpacing" type="checkbox"> Evenly space outputs</label></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Player UID accuracy</legend>
+    <p>Enter Pomp player UIDs to fetch their player data and attempt to extract MP7 statistics for weapon ID <code>p109</code>.</p>
+
+    <div id="uidList">
+      <div class="uid-row">
+        <textarea class="uid" rows="2" placeholder="Player UIDs"></textarea>
+        <button type="button" class="removeUid">Remove</button>
+      </div>
+    </div>
+
+    <button id="addUid" type="button">Add another UID</button>
+    <button id="loadUids" type="button">Fetch and average UIDs</button>
+
+    <p class="hint">Paste multiple UIDs separated by spaces, commas, or newlines. Each valid player has equal weight. Failed lookups are reported separately.</p>
+    <div id="playerResults"></div>
+    <p id="uidStatus" role="status">No player UIDs loaded.</p>
+    <p><strong>Average MP7 accuracy:</strong> <span id="uidAccuracy">Not set</span></p>
+    <p><strong>Average MP7 headshot frequency:</strong> <span id="uidHeadshot">Not set</span></p>
+    <button id="applyUid" type="button" disabled>Use UID averages</button>
+  </fieldset>
+</details>
+
+<section class="accuracy-setup">
+<h2>Accuracy assumptions</h2>
+<p id="baselineStatus" role="status">Loading daily AR accuracy baseline…</p>
+<button id="useBaseline" disabled>Use daily average</button>
+<fieldset>
+  <div class="control">
+    <label for="accuracy">Base accuracy (hits / shots fired, %)</label>
+    <div class="control-row">
+      <input id="accuracy" type="number" min="0" max="100" step="0.1" value="100">
+      <input id="accuracySlider" type="range" min="0" max="100" step="0.1" value="100">
+      <span id="accuracyValue">100.00%</span>
+    </div>
+  </div>
+
+  <div class="control">
+    <label for="headshot">Headshot frequency (% of hits)</label>
+    <div class="control-row">
+      <input id="headshot" type="number" min="0" max="100" step="0.1" value="0">
+      <input id="headshotSlider" type="range" min="0" max="100" step="0.1" value="0">
+      <span id="headshotValue">0.00%</span>
+    </div>
+  </div>
+
+</fieldset>
+
+</section>
+</div>
+<p class="view-options">
+  <label><input id="showGraph" type="checkbox" checked> Show graph</label>
+  <label><input id="showTable" type="checkbox" checked> Show table</label>
+</p>
+<p id="samplingSummary" class="hint"></p>
+
+<section id="graphSection">
+  <h2>Performance by range</h2>
+  <fieldset>
+    <legend>Graph settings</legend>
+    <p><label for="leftMetric">Left axis</label> <select id="leftMetric"></select>
+    <label for="rightMetric">Right axis</label> <select id="rightMetric"></select></p>
+    <p>Values under each sampled point:</p>
+    <div id="pointMetrics" class="control-row"></div>
+    <div class="graph-legend" aria-label="Graph legend">
+      <span><svg width="28" height="14" aria-hidden="true"><path d="M1 7H27" stroke="#efbb43" stroke-width="2"/></svg> Left-axis metric</span>
+      <span><svg width="28" height="14" aria-hidden="true"><path d="M1 7H27" stroke="#db303c" stroke-width="2"/></svg> Right-axis metric (when selected)</span>
+      <span><svg width="28" height="14" aria-hidden="true"><circle cx="14" cy="7" r="4" fill="#292929" stroke="#db303c" stroke-width="2"/></svg> Left-axis point</span>
+      <span><svg width="28" height="14" aria-hidden="true"><circle cx="14" cy="7" r="4" fill="#292929" stroke="#efbb43" stroke-width="2"/></svg> Right-axis point</span>
+      <span><svg width="28" height="16" aria-hidden="true"><path d="M2 3H21V6L15 9L13 15" fill="none" stroke="#efbb43" stroke-width="1.5"/></svg> Cliff · falloff begins</span>
+      <span><svg width="28" height="16" aria-hidden="true"><path d="M1 10L5 5H23L27 10" fill="none" stroke="#efbb43" stroke-width="1.5"/></svg> Plateau · falloff ends</span>
+    </div>
+  </fieldset>
+  <p class="hint">TTK lines smoothly interpolate calculated values at 1 m intervals and shot-count breakpoints, passing through every calculated point without overshoot. Actual shot-count jumps remain. Damage falloff follows the wiki graph labels.</p>
+  <div style="overflow-x:auto"><svg id="chart" viewBox="0 0 1000 390" role="img" aria-label="MP7 performance by range"></svg></div>
+</section>
+
+<section id="tableSection">
+  <h2>Range outputs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Distance</th>
+        <th>Damage per hit</th>
+        <th>bSTK</th>
+        <th>hSTK</th>
+        <th>bTTK</th>
+        <th>hTTK</th>
+        <th>eTTK</th>
+        <th>vTTK</th>
+      </tr>
+    </thead>
+    <tbody id="results"></tbody>
+  </table>
+</section>
+
+<section>
+<h2>Engagement analysis</h2>
+<p>Uses the accuracy and headshot settings above. Change the distance to inspect one engagement.</p>
+<fieldset>
+<p><label for="engagementRange">Distance (m)</label> <input id="engagementRange" type="number" min="0" max="170" step="1" value="150"></p>
+<p><label for="magazineSize">Magazine size (rounds)</label> <input id="magazineSize" type="number" min="1" max="500" step="1" value="30"></p>
+<p><label for="targetTime">Time target (seconds)</label> <input id="targetTime" type="number" min="0" max="60" step="0.1" value="2"></p>
+<p><label><input id="reliabilityReloads" type="checkbox" checked> Include reloads in kill probability and TTK percentiles</label></p>
+</fieldset>
+<p class="hint">Magazine size is an analysis scenario; changing it updates kills per magazine, one-magazine probability and reload-aware timing. It does not imply every entered capacity is available in-game.</p>
+<div id="engagementResults" aria-live="polite"></div>
+<p class="hint">Standard magazine: 30 rounds; firing rate: 12 rounds/s; reload: 1.2s. Range endpoints and damage transcribed directly from the wiki graph labels. Straight-line falloff follows the displayed graph.</p>
+<p class="hint">Shots are independent with constant aim probabilities. First shot at time zero. Reload replaces the normal firing gap. Quantiles beyond 20,000 shots are unavailable. Attachments, projectile travel and target movement are not modelled.</p>
+</section>
+
+<section class="definitions"><h2>Definitions</h2>
+<ul>
+  <li><strong>bTTK:</strong> bodyshot-only time to kill.</li>
+  <li><strong>hTTK:</strong> headshot-only time to kill.</li>
+  <li><strong>eTTK:</strong> expected TTK assuming every shot hits.</li>
+  <li><strong>vTTK:</strong> expected TTK accounting for misses and the selected accuracy.</li>
+  <li>TTK uses 12 rounds per second and excludes reload time.</li>
+</ul>
+
+</section>
+</main>
+<footer>War Brokers Analytics · Unofficial community project</footer>
+<script id="weapon-config" type="application/json">{"slug": "mp7", "name": "MP7", "category": "SMGs", "kind": "bullet", "baseDamage": 60, "headDamage": 120, "rps": 12, "magazine": 30, "reload": 1.2, "swap": 0.5, "runSpeed": 105, "pellets": null, "fireModes": ["Full-Auto"], "range": {"cliff": 41.16, "plateau": 170, "endDamage": 12}, "sourceUrl": "https://war-brokers.fandom.com/wiki/MP7", "verifiedVersion": "v539", "notes": ["Range endpoints and damage transcribed directly from the wiki graph labels. Straight-line falloff follows the displayed graph."], "id": "p109", "retrieved": "2026-10-29", "rangeSourceUrl": "https://static.wikia.nocookie.net/war-brokers/images/2/20/MP7_damageDrop.png/revision/latest?cb=20251219041642", "rangeVerifiedOn": "2026-10-29", "defaultAccuracy": 100, "defaultHeadshot": 0}</script>
+<script type="module" src="../weapon-page.mjs"></script>
+</body>
+</html>

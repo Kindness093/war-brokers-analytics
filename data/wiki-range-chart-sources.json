@@ -1,0 +1,258 @@
+[
+  {
+    "slug": "ar-rifle",
+    "page": "https://war-brokers.fandom.com/wiki/AR_Rifle",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/7/73/AR_damageDrop.png/revision/latest?cb=20240505050735",
+    "transcribed": {
+      "baseDamage": 60,
+      "cliff": 100,
+      "plateau": 205,
+      "endDamage": 6
+    }
+  },
+  {
+    "slug": "ak-rifle",
+    "page": "https://war-brokers.fandom.com/wiki/AK_Rifle",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/f/fd/AK_damageDrop.png/revision/latest?cb=20240505050530",
+    "transcribed": {
+      "baseDamage": 65,
+      "cliff": 100,
+      "plateau": 155,
+      "endDamage": 6.5
+    }
+  },
+  {
+    "slug": "mutant",
+    "page": "https://war-brokers.fandom.com/wiki/Mutant",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/3/3f/Mutant_damageDrop.png/revision/latest?cb=20241220025151",
+    "transcribed": {
+      "baseDamage": 67,
+      "cliff": 100,
+      "plateau": 167.5,
+      "endDamage": 6.7
+    }
+  },
+  {
+    "slug": "scar",
+    "page": "https://war-brokers.fandom.com/wiki/SCAR",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/e/e7/SCAR_damageDrop.png/revision/latest?cb=20240505050746",
+    "transcribed": {
+      "baseDamage": 52,
+      "cliff": 100,
+      "plateau": 172.3,
+      "endDamage": 5.2
+    }
+  },
+  {
+    "slug": "vss",
+    "page": "https://war-brokers.fandom.com/wiki/VSS",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/d/d0/VSS_damageDrop.png/revision/latest?cb=20251219041623",
+    "transcribed": {
+      "baseDamage": 69,
+      "cliff": 100,
+      "plateau": 200,
+      "endDamage": 27.6
+    }
+  },
+  {
+    "slug": "g3a3",
+    "page": "https://war-brokers.fandom.com/wiki/G3A3",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/e/e6/G3A3_damageDrop.png/revision/latest?cb=20241220094844",
+    "transcribed": {
+      "baseDamage": 63,
+      "cliff": 45.7,
+      "plateau": 243.8,
+      "endDamage": 6.3
+    }
+  },
+  {
+    "slug": "lmg",
+    "page": "https://war-brokers.fandom.com/wiki/LMG",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/d/d8/LMG_damageDrop.png/revision/latest?cb=20240505050916",
+    "transcribed": {
+      "baseDamage": 70,
+      "cliff": 137,
+      "plateau": 305,
+      "endDamage": 21
+    }
+  },
+  {
+    "slug": "smg",
+    "page": "https://war-brokers.fandom.com/wiki/Sub-Machine_Gun",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/f/f9/SMG_damageDrop.png/revision/latest?cb=20251219041712",
+    "transcribed": {
+      "baseDamage": 63,
+      "cliff": 30.48,
+      "plateau": 79.24,
+      "endDamage": 6.3
+    }
+  },
+  {
+    "slug": "vek-smg",
+    "page": "https://war-brokers.fandom.com/wiki/VEK_SMG",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/b/ba/VEK_damageDrop.png/revision/latest?cb=20251219041748",
+    "transcribed": {
+      "baseDamage": 50,
+      "cliff": 50.28,
+      "plateau": 70.11,
+      "endDamage": 5
+    }
+  },
+  {
+    "slug": "ak-smg",
+    "page": "https://war-brokers.fandom.com/wiki/AK_SMG",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/9/9b/AKSMG_damageDrop.png/revision/latest?cb=20251219041808",
+    "transcribed": {
+      "baseDamage": 59,
+      "cliff": 91.46,
+      "plateau": 144.77,
+      "endDamage": 5.9
+    }
+  },
+  {
+    "slug": "mp7",
+    "page": "https://war-brokers.fandom.com/wiki/MP7",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/2/20/MP7_damageDrop.png/revision/latest?cb=20251219041642",
+    "transcribed": {
+      "baseDamage": 60,
+      "cliff": 41.16,
+      "plateau": 170,
+      "endDamage": 12
+    }
+  },
+  {
+    "slug": "hunting-rifle",
+    "page": "https://war-brokers.fandom.com/wiki/Hunting_Rifle",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/4/49/HuntingRifle_damageDrop.png/revision/latest?cb=20240505050806",
+    "transcribed": {
+      "baseDamage": 95,
+      "cliff": 200,
+      "plateau": 400,
+      "endDamage": 47.5
+    }
+  },
+  {
+    "slug": "marksmans-rifle",
+    "page": "https://war-brokers.fandom.com/wiki/Marksman's_Rifle",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/d/df/MarksmansRifle_damageDrop.png/revision/latest?cb=20241220024259",
+    "transcribed": {
+      "baseDamage": 95,
+      "cliff": 400,
+      "plateau": 762,
+      "endDamage": 9.5
+    }
+  },
+  {
+    "slug": "auto-sniper",
+    "page": "https://war-brokers.fandom.com/wiki/Auto_Sniper",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/d/d5/AutoSniper_damageDrop.png/revision/latest?cb=20240107114622",
+    "transcribed": {
+      "baseDamage": 125,
+      "cliff": 701,
+      "plateau": 1523.9,
+      "endDamage": 100
+    }
+  },
+  {
+    "slug": "sniper-rifle",
+    "page": "https://war-brokers.fandom.com/wiki/Sniper_Rifle",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/b/b3/SniperRifle_damageDrop.png/revision/latest?cb=20240503124319",
+    "transcribed": {
+      "baseDamage": 200,
+      "cliff": 701,
+      "plateau": 1524,
+      "endDamage": 160
+    }
+  },
+  {
+    "slug": "50-cal-sniper",
+    "page": "https://war-brokers.fandom.com/wiki/.50_Cal_Sniper",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/0/04/50Cal_damageDrop.png/revision/latest?cb=20231130051440",
+    "transcribed": {
+      "baseDamage": 300,
+      "cliff": 701,
+      "plateau": 1524,
+      "endDamage": 240
+    }
+  },
+  {
+    "slug": "shotgun",
+    "page": "https://war-brokers.fandom.com/wiki/Shotgun",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/b/b4/Shotgun_damageDrop.png/revision/latest?cb=20240505050815",
+    "transcribed": {
+      "baseDamage": 288,
+      "cliff": 30,
+      "plateau": 100,
+      "endDamage": 57.6
+    }
+  },
+  {
+    "slug": "tactical-shotgun",
+    "page": "https://war-brokers.fandom.com/wiki/Tactical_Shotgun",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/9/91/TacticalShotgun_damageDrop.png/revision/latest?cb=20240505050822",
+    "transcribed": {
+      "baseDamage": 225,
+      "cliff": 30,
+      "plateau": 100,
+      "endDamage": 45
+    }
+  },
+  {
+    "slug": "minigun",
+    "page": "https://war-brokers.fandom.com/wiki/Minigun",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/7/78/Minigun_damageDrop.png/revision/latest?cb=20240505050901",
+    "transcribed": {
+      "baseDamage": 50,
+      "cliff": 100,
+      "plateau": 400,
+      "endDamage": 25
+    }
+  },
+  {
+    "slug": "crossbow",
+    "page": "https://war-brokers.fandom.com/wiki/Crossbow",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/0/07/Crossbow_damageDrop.png/revision/latest?cb=20231130051551",
+    "transcribed": {
+      "baseDamage": 375,
+      "cliff": 100,
+      "plateau": 700,
+      "endDamage": 75
+    }
+  },
+  {
+    "slug": "rpg",
+    "page": "https://war-brokers.fandom.com/wiki/RPG",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/3/36/RPG_damageDrop.png/revision/latest?cb=20240505050840",
+    "transcribed": {
+      "blast": {
+        "baseDamage": 200,
+        "radius": 36.6,
+        "endDamage": 0
+      }
+    }
+  },
+  {
+    "slug": "homing-missile",
+    "page": "https://war-brokers.fandom.com/wiki/Homing_Missile",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/e/ea/HomingMissile_damageDrop.png/revision/latest?cb=20240505050846",
+    "transcribed": {
+      "blast": {
+        "baseDamage": 75,
+        "radius": 4.58,
+        "endDamage": 0
+      }
+    }
+  },
+  {
+    "slug": "grenade-launcher",
+    "page": "https://war-brokers.fandom.com/wiki/Grenade_Launcher",
+    "chart": "https://static.wikia.nocookie.net/war-brokers/images/d/d0/GrenadeLauncher_damageDrop.png/revision/latest?cb=20240505050834",
+    "transcribed": {
+      "blast": {
+        "baseDamage": 125,
+        "radius": 12.2,
+        "endDamage": 0
+      }
+    }
+  }
+]

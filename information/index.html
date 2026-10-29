@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en-CA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Information | War Brokers Analytics</title><link rel="icon" href="/favicon.ico?v=3"><link rel="stylesheet" href="../theme.css"><link rel="stylesheet" href="../ar-page.css"><script type="module" src="../cursor.mjs"></script></head><body><header class="masthead"><a href="../index.html" aria-label="War Brokers Analytics home"><img src="../assets/war-brokers-analytics-logo.png" alt="War Brokers Analytics" width="88" height="88"></a><div><p class="site-name">WAR BROKERS <span>ANALYTICS</span></p><nav aria-label="Main navigation"><a href="../index.html">Home</a><a href="../weapons/index.html">Weapons</a><a href="../players/index.html">Players</a><a href="../leaderboards/index.html">Leaderboards</a><a href="../information/index.html">Information</a></nav></div></header><main class="content-page"><div class="page-title"><p class="eyebrow">FIELD MANUAL</p><h1>Information</h1></div>
+  <p>This manual explains the website's statistics, assumptions, and calculations.</p>
+
+  <h2>Number Formatting</h2>
+  <p>Numbers are displayed to a maximum of two decimal places. Hover over graph point values and calculated table results to see ten decimal places. Calculations use the unrounded values.</p>
+
+  <h2>Weapon Range Terms</h2>
+  <ul>
+    <li><strong>Base damage:</strong> damage before falloff begins.</li>
+    <li><strong>End damage:</strong> damage at the drop-off plateau.</li>
+    <li><strong>Damage differential:</strong> base damage minus end damage.</li>
+    <li><strong>Drop-off cliff:</strong> distance where damage falloff begins.</li>
+    <li><strong>Drop-off plateau:</strong> distance where end damage is reached.</li>
+    <li><strong>Drop-off rate:</strong> average damage lost per metre between the cliff and plateau.</li>
+  </ul>
+
+  <h2>Weapon Performance Terms</h2>
+  <ul>
+    <li><strong>bTTK:</strong> bodyshot-only time to kill.</li>
+    <li><strong>hTTK:</strong> headshot-only time to kill.</li>
+    <li><strong>eTTK:</strong> expected TTK without misses.</li>
+    <li><strong>vTTK:</strong> expected TTK including misses.</li>
+    <li><strong>DPS:</strong> damage per second under the specified firing assumptions.</li>
+    <li><strong>STK:</strong> shots to kill.</li>
+  </ul>
+
+  <h2>Accuracy Assumptions</h2>
+  <p>Weapon pages accept multiple UIDs, deduplicate them, and average valid per-player accuracies equally. Daily collection walks the public lifetime rankings, then fetches each discovered profile. This is ranking-discoverable coverage rather than all registered accounts; a complete pass can take multiple days. Each profile supplies observations for every supported weapon, without extra requests per weapon. The last complete baseline remains active while a new pass runs.</p>
+
+  <h2>Data and Estimates</h2>
+  <p>Reference statistics should be verified against reliable game data. Estimated damage curves will be labelled as estimates until the actual damage curve is confirmed.</p>
+
+  
+<h2>Engagement metrics</h2><p>Expected shots to kill includes misses. Expected kills per magazine counts completed kills against consecutive fresh targets and discards excess damage from killing shots. Magazine size is adjustable; this also updates one-magazine probability and reload timing. Median and 90th-percentile TTK come from a discrete shot-outcome distribution.</p><h2>Weapon-specific limitations</h2><p>Unknown falloff curves use an explicitly labelled base-damage scenario. Shotguns use manual independent-pellet probabilities, not API accuracy counters. Launchers expose reference facts without ordinary rifle TTK predictions. Projectile flight, spread correlations, burst timing and shell-by-shell reloads are not verified.</p><footer>War Brokers Analytics · Unofficial community project</footer></main></body></html>

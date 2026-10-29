@@ -1,0 +1,28 @@
+:root {color-scheme:dark;}
+html,body {background:#292929;color:#f4f4f4;}
+a {color:#8fc8ff;}
+.hint {color:#ccc;}
+input,textarea,select,button {color:#fff;background:#373737;border:1px solid #999;border-radius:3px;}
+input,textarea,select {padding:4px 6px;}
+button {padding:5px 9px;}
+button:disabled {opacity:.45;}
+button:not(:disabled):hover,input:hover,textarea:hover,select:hover {border-color:#ff9e24;outline:1px solid #ff9e24;}
+a,summary,label {width:fit-content;max-width:100%;}
+a {display:inline-block;}
+summary {padding:3px 5px;border:1px solid #777;border-radius:3px;}
+label {display:inline-block;}
+label:has(input[type="checkbox"]) {padding:3px 5px;border:1px solid #666;border-radius:3px;}
+label:has(input[type="checkbox"]):hover,summary:hover,a:hover {outline:1px solid #ff9e24;outline-offset:2px;}
+.control label {width:fit-content;}
+:focus-visible {outline:2px solid #ff9e24;outline-offset:3px;}
+input[type="range"] {padding:0;}
+fieldset,th,td {border-color:#777;}
+#chart {background:#292929;border-radius:3px;color:#f4f4f4;}
+#chart text:not([fill]) {fill:#f4f4f4;}
+/* The logo link occupies just its visible image, not the full row. */
+a:has(img) {width:fit-content;line-height:0;}
+
+
+input:not([type="checkbox"]):not([type="range"]),textarea,select {color:#efbb43;caret-color:#efbb43;}
+input::placeholder,textarea::placeholder {color:#b86b70;opacity:1;}
+select option {color:#efbb43;background:#292929;}
