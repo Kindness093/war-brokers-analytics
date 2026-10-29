@@ -496,7 +496,7 @@ async function loadBaseline() {
     const response = await fetch(STATIC?new URL('assets/daily-baseline.json',SITE_ROOT):new URL('api/baseline?weapon='+WEAPON.id,SITE_ROOT));
     if (!response.ok) throw new Error("service unavailable");
     let data = await response.json();
-    if(STATIC) data={baseline:data.weapons?.[WEAPON.id]||(WEAPON.id==='p61'&&Number.isFinite(data.accuracy)?data:null),running:false,error:'Hosted snapshot; the daily collector runs separately via GitHub Actions.'};
+    if(STATIC) data={baseline:data.weapons?.[WEAPON.id]||(WEAPON.id==='p61'&&Number.isFinite(data.accuracy)?data:null),running:false,progress:data.collection||null,error:'Hosted snapshot; the daily collector runs separately via GitHub Actions.'};
     baseline = data.baseline;
     const progressText = data.progress
       ? ` Current collection: accuracies pulled from ${data.progress.playersFetched} players; ${data.progress.playersDiscovered} unique players discovered so far.`

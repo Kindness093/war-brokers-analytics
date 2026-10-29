@@ -34,13 +34,12 @@ jobs:
           key: accuracy-checkpoint-${{ github.run_id }}
       - name: Publish only the last completed aggregate
         run: |
-          if [ -f .data/baseline.json ]; then
-            cp .data/baseline.json assets/daily-baseline.json
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add assets/daily-baseline.json
-            if ! git diff --cached --quiet; then
-              git commit -m 'Update completed weapon accuracy averages'
-              git push
-            fi
+          node scripts/export-baseline.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/daily-baseline.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update weapon accuracy snapshot and collection counts'
+            git pull --rebase origin main
+            git push
           fi
