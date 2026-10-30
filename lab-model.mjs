@@ -46,9 +46,10 @@ export function metricValue(w,d,key,aim){
  const unit=damage/pellets;
  if(key==='expectedShots')return expectedTriggerCount(375,unit,outcomes);
  if(key==='killsPerMag'){
-  if(Math.ceil(375/unit)*w.magazine*outcomes.length>3e6)return null;
+  if(Math.ceil(375/unit)*w.magazine*outcomes.length>100000)return null;
   return expectedKillsPerMagazine(damage,aim.accuracy,aim.headshot,w.magazine,375,{multiplier:h,pellets});
  }
+ if(Math.ceil(375/unit)*outcomes.length*(firing.period||1)>150000)return null;
  return expectedTime(375,unit,outcomes,firing);
 }
 export function rowAt(w,d,aim){return {distance:d,...Object.fromEntries(Object.keys(METRICS).map(k=>[k,metricValue(w,d,k,aim)]))};}

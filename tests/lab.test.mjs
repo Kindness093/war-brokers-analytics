@@ -44,3 +44,10 @@ test('CSV includes custom configuration and precise results, and neutralises spr
 test('smooth chart passes through calculated points and retains plateaus',()=>{
  const path=smoothPath([[0,1],[25,1],[50,2],[100,5]]);assert(path.startsWith('M 0 1'));assert(path.endsWith('100 5'));assert(!/NaN|Infinity/.test(path));
 });
+
+test('extreme custom scenarios stop at numerical limits instead of blocking the graph',()=>{
+ const extreme={...ar,baseDamage:0.1,headDamage:0.2,magazine:500,range:{cliff:0,plateau:200,endDamage:0.01}};
+ assert.equal(metricValue(extreme,0,'vttk',{...aim,reloads:true}),null);
+ assert.equal(metricValue(extreme,0,'killsPerMag',aim),null);
+ assert.equal(metricValue(extreme,0,'bodyShots',aim),3750);
+});
