@@ -105,7 +105,7 @@ if(process.env.WB_COLLECT_ONLY==='1') {
 }
 else if(process.env.WB_DISABLE_SCHEDULER==='1') clearTimeout(timer);
 else if(progress || !baseline || baseline.completedAt.slice(0,10)!==new Date().toISOString().slice(0,10)) refresh();
-const publicFiles=new Set(['weapon-engine.mjs','weapon-page.mjs','profile-stats.mjs',...catalog.map(w=>'weapons/'+w.slug+'.html'),'ar-page.css','theme.css','cursor.mjs','favicon.ico','assets/favicon-32.png','assets/favicon-64.png','assets/war-brokers-analytics-logo.png','combat.mjs','index.html','players/index.html','weapons/index.html','weapons/ar-rifle.html','leaderboards/index.html','information/index.html']);
+const publicFiles=new Set(['weapons/compare.html','weapons/calculator.html','data/weapons.json','tool-page.mjs','lab-model.mjs','lab-chart.mjs','lab-export.mjs','lab.css','weapon-engine.mjs','weapon-page.mjs','profile-stats.mjs',...catalog.map(w=>'weapons/'+w.slug+'.html'),'ar-page.css','theme.css','cursor.mjs','favicon.ico','assets/favicon-32.png','assets/favicon-64.png','assets/war-brokers-analytics-logo.png','combat.mjs','index.html','players/index.html','weapons/index.html','weapons/ar-rifle.html','leaderboards/index.html','information/index.html']);
 const server=http.createServer(async(req,res)=>{
   const json=(status,value)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(value));};
   try {
@@ -127,7 +127,7 @@ const server=http.createServer(async(req,res)=>{
     let file=decodeURIComponent(url.pathname).slice(1);if(!file || file.endsWith('/')) file+='index.html';
     if(!publicFiles.has(file)) return json(404,{error:'Not found'});
     const body=await readFile(path.join(root,file));
-    res.writeHead(200,{'Cache-Control':'no-cache','Content-Length':body.length,'Content-Type':file.endsWith('.css')?'text/css; charset=utf-8':file.endsWith('.ico')?'image/x-icon':file.endsWith('.png')?'image/png':file.endsWith('.mjs')?'text/javascript; charset=utf-8':'text/html; charset=utf-8'});res.end(req.method==='HEAD'?undefined:body);
+    res.writeHead(200,{'Cache-Control':'no-cache','Content-Length':body.length,'Content-Type':file.endsWith('.json')?'application/json; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':file.endsWith('.ico')?'image/x-icon':file.endsWith('.png')?'image/png':file.endsWith('.mjs')?'text/javascript; charset=utf-8':'text/html; charset=utf-8'});res.end(req.method==='HEAD'?undefined:body);
   } catch(e) {if(!res.headersSent) json(500,{error:'Request failed'}); else res.end();}
 });
 if(process.env.WB_COLLECT_ONLY!=='1') server.listen(Number(process.env.PORT||4173),'127.0.0.1',()=>console.log('Open http://localhost:4173/weapons/ar-rifle.html'));

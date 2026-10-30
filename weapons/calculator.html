@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weapon calculator | War Brokers Analytics</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    color: black;
+    background: white;
+    line-height: 1.45;
+    margin: 24px;
+    max-width: 1100px;
+  }
+  a { color: blue; }
+  fieldset { margin: 18px 0; padding: 14px; }
+  legend { font-weight: bold; }
+  .control { margin: 14px 0; }
+  .control label { display: block; margin-bottom: 5px; }
+  .control-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  input[type="number"] { width: 80px; }
+  input[type="range"] { width: min(400px, 100%); }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+  .stats p { margin: 5px 0; }
+  .hint { color: #444; font-size: .93rem; }
+  .uid-row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+  .uid-row input { width: min(440px, 90%); }
+  button { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 24px; }
+  th, td { border: 1px solid #888; padding: 7px; text-align: left; }
+  #chart { width: 100%; height: auto; }
+  [hidden] { display: none !important; }
+</style>
+<link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=3">
+<script type="module" src="../cursor.mjs"></script>
+<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../ar-page.css">
+<link rel="stylesheet" href="../lab.css"></head>
+
+<body data-tool="calculator">
+<header class="masthead">
+<a href="../index.html" aria-label="War Brokers Analytics home"><img src="../assets/war-brokers-analytics-logo.png" alt="War Brokers Analytics" width="100" height="100"></a>
+<div><p class="site-name">WAR BROKERS <span>ANALYTICS</span></p><nav aria-label="Main navigation"><a href="../index.html">Home</a><a href="index.html">Weapons</a><a href="../players/index.html">Players</a><a href="../leaderboards/index.html">Leaderboards</a><a href="../information/index.html">Information</a></nav></div>
+</header>
+<main><div class="page-title"><p class="eyebrow">ARMOURY / TOOLS</p><h1>Weapon calculator</h1><p>Start with a primary weapon, edit its stats, and export your custom analysis.</p></div><nav class="tool-nav" aria-label="Weapon tools"><a href="index.html">Armoury</a><a href="compare.html">Compare weapons</a><a href="calculator.html">Weapon calculator</a></nav><form id="lab-form" novalidate><section class="lab-selection"><h2>Starting template</h2><div class="tool-actions"><label for="preset">Primary weapon</label><select id="preset"></select><button id="reset-preset" type="button">Restore template</button><button id="compare-custom" type="button">Compare this scenario</button></div><p class="hint">Selecting a template replaces the editor values. All fields remain editable; your changes stay in this page until exported.</p></section><div class="lab-workspace"><aside class="lab-editor"><h2>Editable stats</h2><div id="editor-fields" class="editor-fields"></div><p class="hint">Blank optional fields stay unknown. Headshot damage can be edited freely; exact probabilistic metrics currently support 1×, 2×, 3× and 4× multipliers. Blast distance is measured from the explosion; the cliff field can model a constant-damage inner radius.</p></aside><div class="lab-preview"><section id="preview-summary" class="reference-strip"></section><details class="lab-assumptions" open><summary><h2>Aim and timing</h2></summary><div class="lab-controls">
+<div class="lab-field"><label for="accuracy">Accuracy (%)</label><input id="accuracy" type="number" min="0" max="100" step="0.1" value="21.546585767796305"></div>
+<div class="lab-field"><label for="headshot">Headshot frequency (% of hits)</label><input id="headshot" type="number" min="0" max="100" step="0.1" value="40.55982025837858"></div>
+<div class="lab-field"><label for="rangeModel">Range scenario</label><select id="rangeModel"><option value="published">Weapon damage curve</option><option value="base">Base damage · ignores falloff</option></select></div>
+<div class="lab-field"><label for="pattern">Firing pattern</label><select id="pattern"><option value="standard">Uniform firing</option><option value="burst">Custom burst timing</option></select></div>
+<div class="lab-field"><label for="burstSize">Custom burst size</label><input id="burstSize" type="number" min="2" max="12" step="1" value="3"></div>
+<div class="lab-field"><label for="burstGap">Last shot to next burst (s)</label><input id="burstGap" type="number" min="0.001" max="120" step="0.01" value="0.4"></div>
+<label><input id="reloads" type="checkbox"> Include reloads in graph TTK and percentiles</label>
+</div><p class="hint">Shared manual aim scenario, applied equally to each weapon. Shotguns interpret accuracy as independent pellet probability. Custom burst timing is a scenario, not a wiki measurement.</p></details>
+<details class="lab-assumptions" open><summary><h2>Range and graph settings</h2></summary><div class="lab-controls">
+<div class="lab-field"><label for="metric">Graph metric</label><select id="metric"></select></div>
+<div class="lab-field"><label for="maxDistance">Graph endpoint (m)</label><input id="maxDistance" type="number" min="0.01" max="5000" step="0.01" value="205"></div>
+<div class="lab-field"><label for="interval">Interval (m)</label><input id="interval" type="number" min="0.1" max="5000" step="0.1" value="25"></div>
+<div class="lab-field"><label for="count">Sample count per weapon</label><input id="count" type="number" min="2" max="20" step="1" value="8"></div>
+<label><input id="includeEndpoint" type="checkbox" checked> Include endpoint</label><label><input id="evenSpacing" type="checkbox"> Evenly space samples</label><label><input id="showBoundaries" type="checkbox"> Show cliffs and plateaus</label>
+</div><p class="hint">Point datasets</p><div id="point-datasets" class="control-row"></div><p class="view-options"><label><input id="showGraph" type="checkbox" checked> Show graph</label><label><input id="showTable" type="checkbox" checked> Show range table</label></p></details></div></div><div id="lab-errors" role="alert" hidden></div>
+<section class="lab-output"><h2>Performance by range</h2><p class="hint"><span id="distance-label">Shooter distance</span> on a common axis. Hover over points or values for ten decimal places. Lines stop where a model is unavailable.</p><div id="chart-output"></div></section>
+<section id="range-section" class="lab-output"><h2>Range outputs</h2><div id="range-output"></div></section>
+<section class="lab-output"><h2>Engagement analysis</h2><div class="lab-controls"><div class="lab-field"><label for="engagementDistance">Engagement distance (m)</label><input id="engagementDistance" type="number" min="0" max="5000" step="0.01" value="100"></div><div class="lab-field"><label for="timeTarget">Time target (s)</label><input id="timeTarget" type="number" min="0" max="60" step="0.1" value="2"></div></div><div id="engagement-output"></div></section>
+<section class="lab-output"><h2>Export analysis</h2><div class="tool-actions"><button id="export-csv" type="button" disabled>Export CSV</button><button id="export-png" type="button" disabled>Export PNG</button><button id="export-svg" type="button" disabled>Export SVG</button></div><p class="hint">Exports include weapon stats, aim settings, the graph (images), range outputs and engagement results. CSV values retain ten decimal places.</p><p id="export-status" role="status"></p></section>
+<details class="lab-notes"><summary>Model notes</summary><div id="model-notes"></div></details></form></main><footer>War Brokers Analytics · Unofficial community project</footer><script type="module" src="../tool-page.mjs"></script></body></html>

@@ -126,3 +126,5 @@ nav {flex-wrap:wrap;}
 .reference-list li {padding:12px 30px;}
 .armoury-group>.hint {margin-left:30px;}
 @media(max-width:600px) {.weapon-type {margin-left:16px;}.armoury-list a {padding-left:18px;}}
+
+.weapon-tool-links {display:flex;flex-wrap:wrap;gap:12px 24px;padding:0 0 20px;font-size:13px;}

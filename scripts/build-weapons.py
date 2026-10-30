@@ -28,7 +28,7 @@ for w in weapons:
  stats += [('Damage differential',num(w['blast']['baseDamage'] if w.get('blast') else w['baseDamage']-r['endDamage'] if r.get('endDamage') is not None else None))]
  stats += [('Average drop-off rate','<span id="dropRate">—</span>')]
  stats += [('Fire modes',html.escape(' / '.join(w['fireModes']) or 'Unverified'))]
- values={'INTERVAL':200 if end>1000 else 100 if end>500 else 50 if end>300 else 25,'CONFIG':json.dumps(w).replace('</','<\\/'),'NAME':html.escape(w['name']),'CATEGORY':w['category'].upper(),'STATS':''.join(f'<p><strong>{k}:</strong> {v}</p>' for k,v in stats),'SOURCE':source,'MODEL_NOTE':html.escape(notes),'SCENARIOS':scenario,'ID':w['id'],'ACCURACY':w['defaultAccuracy'],'HEADSHOT':w['defaultHeadshot'],'ACCURACY_LABEL':f'{w["defaultAccuracy"]:.2f}','HEADSHOT_LABEL':f'{w["defaultHeadshot"]:.2f}','MAGAZINE':w['magazine'],'RPS':w['rps'],'RELOAD':w['reload'],'END':end,'CLIFF':cliff}
+ values={'SLUG':w['slug'],'INTERVAL':200 if end>1000 else 100 if end>500 else 50 if end>300 else 25,'CONFIG':json.dumps(w).replace('</','<\\/'),'NAME':html.escape(w['name']),'CATEGORY':w['category'].upper(),'STATS':''.join(f'<p><strong>{k}:</strong> {v}</p>' for k,v in stats),'SOURCE':source,'MODEL_NOTE':html.escape(notes),'SCENARIOS':scenario,'ID':w['id'],'ACCURACY':w['defaultAccuracy'],'HEADSHOT':w['defaultHeadshot'],'ACCURACY_LABEL':f'{w["defaultAccuracy"]:.2f}','HEADSHOT_LABEL':f'{w["defaultHeadshot"]:.2f}','MAGAZINE':w['magazine'],'RPS':w['rps'],'RELOAD':w['reload'],'END':end,'CLIFF':cliff}
  page=template
  page=page.replace('id="engagementRange" type="number" min="0" max="{{END}}" step="1" value="150"',f'id="engagementRange" type="number" min="0" max="{{{{END}}}}" step="1" value="{min(150,end)}"')
  for key,val in values.items():page=page.replace('{{'+key+'}}',str(val))
@@ -47,6 +47,7 @@ header=template.split('<main>')[0].replace('{{NAME}}','Weapons')
 header=header.replace('AR Rifle Analytics','Weapons').replace('/ Weapons','/ Weapons')
 # The index needs no runtime configuration or generated control placeholders.
 body='<main class="armoury-page"><div class="page-title"><p class="eyebrow">ARMOURY</p><h1>Weapons</h1><p>Browse weapons by slot and type. Select a heading to expand or collapse its list.</p></div>'
+body+='<nav class="weapon-tool-links" aria-label="Weapon tools"><a href="compare.html">Compare up to three weapons</a><a href="calculator.html">Weapon calculator</a></nav>'
 body+='<details class="armoury-group" open><summary><h2>Primary weapons</h2><span class="group-count">'+str(len(weapons))+' weapons</span></summary>'
 for category in dict.fromkeys(w['category'] for w in weapons):
  group=[w for w in weapons if w['category']==category]
@@ -63,3 +64,6 @@ for heading,names in sections.items():
 body+='<p class="hint">Source: <a href="https://war-brokers.fandom.com/wiki/Weapons">War Brokers Wiki weapon list</a>. The grenades section also includes deployables such as the Laser Trip Mine.</p></main><footer>War Brokers Analytics · Unofficial community project</footer></body></html>'
 (root/'weapons/index.html').write_text(header+body)
 print(f'Built {len(weapons)} weapon pages and armoury index.')
+
+import subprocess,sys
+subprocess.run([sys.executable,str(root/'scripts/build-tools.py')],check=True)

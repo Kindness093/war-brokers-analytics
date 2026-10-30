@@ -40,3 +40,13 @@ The hosted site uses GitHub Pages with direct browser WBAPI lookups, subject to 
 Build with `node scripts/build-static.mjs`. Run checks with `npm test`. `.github/workflows/pages.yml` tests, builds and deploys through GitHub Pages on pushes to main and after collection workflows complete.
 
 Use Canadian English in site copy (armoury, colour, centre, labelled, modelled); preserve standard HTML/CSS/API identifiers. Documents use en-CA.
+
+## Comparison and custom calculator
+
+`weapons/compare.html` compares one to three weapons with a common distance axis and a shared manual aim/timing scenario. Select the plotted metric, graph endpoint, range samples and point datasets. Each weapon has a solid coloured series and hollow points. Mixed blast-distance and shooter-distance comparisons are rejected to avoid conflating two different axes.
+
+`weapons/calculator.html` starts from AR Rifle stats and can load any of the 23 primary weapons as an editable template. Edits are isolated custom scenarios and never modify the reference catalog. Editable fields include damage and critical damage, falloff endpoints, magazine, RPS, reload/swap, pellet count, projectile limit, movement/reference fields and custom burst timing. Use Compare this scenario to carry the edited weapon into a three-way comparison. Health remains fixed at 375 HP.
+
+Both tools export CSV (configuration plus ten-decimal result values), PNG and SVG (a standalone analysis report with graph, range table and engagement results). Images show rounded values. Optional stats remain blank/unknown. Supported probabilistic outcomes currently require an integer critical multiplier from 1 through 4; other critical values retain deterministic outputs and are explicitly marked unavailable for probability metrics. Computation limits suppress expensive extreme scenarios instead of freezing the page or inventing results. Custom burst scenarios support expected TTK but do not report percentile or deadline probabilities.
+
+Shared files: `lab-model.mjs` (calculations and CSV), `lab-chart.mjs` (graph), `lab-export.mjs` (standalone images), `tool-page.mjs` (interactive pages), `lab.css`, and `scripts/build-tools.py`. Tool pages are regenerated as part of the normal static build. Run `npm run build` to package the full public site.

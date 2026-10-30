@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url)),dest=path.join(root,'_site');
 execFileSync('python3',[path.join(root,'scripts/build-weapons.py')],{stdio:'inherit'});
 await mkdir(dest,{recursive:true});
-for(const name of ['theme.css','ar-page.css','cursor.mjs','weapon-page.mjs','combat.mjs','weapon-engine.mjs','profile-stats.mjs','favicon.ico']) await copyFile(path.join(root,name),path.join(dest,name));
+for(const name of ['theme.css','ar-page.css','cursor.mjs','weapon-page.mjs','combat.mjs','weapon-engine.mjs','profile-stats.mjs','favicon.ico','tool-page.mjs','lab-model.mjs','lab-chart.mjs','lab-export.mjs','lab.css']) await copyFile(path.join(root,name),path.join(dest,name));
 for(const folder of ['','weapons','players','leaderboards','information']) {
  await mkdir(path.join(dest,folder),{recursive:true});
  for(const name of await readdir(path.join(root,folder))) {
@@ -16,6 +16,8 @@ for(const folder of ['','weapons','players','leaderboards','information']) {
   await writeFile(path.join(dest,folder,name),html);
  }
 }
+await mkdir(path.join(dest,'data'),{recursive:true});
+await copyFile(path.join(root,'data/weapons.json'),path.join(dest,'data/weapons.json'));
 await mkdir(path.join(dest,'assets'),{recursive:true});
 for(const name of ['war-brokers-analytics-logo.png','favicon-32.png','favicon-64.png']) await copyFile(path.join(root,'assets',name),path.join(dest,'assets',name));
 let baseline={weapons:{}};

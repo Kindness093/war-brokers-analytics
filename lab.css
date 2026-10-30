@@ -1,0 +1,40 @@
+.tool-nav {display:flex;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+.tool-actions {display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.lab-selection {padding-bottom:20px;border-bottom:1px solid var(--line);}
+#weapon-slots {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:16px;}
+.weapon-slot {border-top:2px solid var(--series-colour);padding-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.weapon-slot label {font-size:12px;color:var(--series-colour);width:100%;}
+.weapon-slot select {width:100%;max-width:100%;}
+.lab-assumptions {margin:20px 0;border-bottom:1px solid var(--line);padding-bottom:16px;}
+.lab-assumptions>summary {padding:8px 0;border:0;}
+.lab-assumptions>summary h2 {display:inline;margin:0;padding:0;font-size:17px;}
+.lab-controls {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 22px;margin:16px 0;align-items:end;}
+.lab-field {display:flex;flex-direction:column;gap:6px;min-width:0;}
+.lab-field label {font-size:12px;color:#d5cfc7;}
+.lab-field input,.lab-field select {width:100%;max-width:100%;box-sizing:border-box;min-width:0;}
+.lab-field input[type=number] {width:100%;}
+.lab-controls>label {align-self:center;}
+#point-datasets {gap:6px 14px;}
+.lab-workspace {display:grid;grid-template-columns:330px minmax(0,1fr);gap:30px;align-items:start;}
+.lab-editor {border-right:1px solid var(--line);padding-right:24px;}
+.editor-fields {display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;}
+.editor-fields .lab-field:nth-child(-n+2),.editor-fields .lab-field:nth-last-child(1) {grid-column:1 / -1;}
+.lab-preview .stats {grid-template-columns:repeat(2,minmax(0,1fr));}
+.lab-preview .stats p:last-child {grid-column:auto;}
+.lab-preview .stats p {display:block;}
+.lab-preview .stats strong {display:block;font-size:11px;}
+.lab-preview .lab-controls {grid-template-columns:repeat(2,minmax(0,1fr));}
+.lab-output {border-top:1px solid var(--line);margin-top:22px;}
+#chart-output {border:1px solid var(--line);background:#292929;margin-top:16px;}
+.table-scroll {overflow-x:auto;}
+.lab-output table {width:100%;}
+.lab-output th {font-size:11px;}
+.lab-output td {white-space:nowrap;}
+#engagement-output td:first-child {white-space:normal;text-align:left;}
+.series-table h3 {font-size:15px;margin:20px 0 8px;}
+#lab-errors {border-left:3px solid var(--red);padding:12px 16px;color:#ffbabf;background:#392728;margin-top:20px;}
+.lab-notes {margin:25px 0;}
+#preview-summary {padding-bottom:20px;}
+@media(max-width:950px) {.lab-workspace {grid-template-columns:280px minmax(0,1fr);gap:20px;}.lab-controls {grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:760px) {.lab-workspace {display:block;}.lab-editor {border-right:0;padding-right:0;border-bottom:1px solid var(--line);padding-bottom:22px;}#weapon-slots {grid-template-columns:1fr;}.weapon-slot {display:grid;grid-template-columns:1fr auto;}.weapon-slot label {grid-column:1 / -1;}.editor-fields {grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:420px) {.lab-controls,.lab-preview .lab-controls {grid-template-columns:1fr;} .tool-nav {gap:12px;}}
